@@ -1,4 +1,4 @@
-PACKAGE <- "paws.storage"
+PACKAGE <- "paws.cost.management"
 
 # basic logger
 log_info <- function(msg) {
@@ -22,7 +22,7 @@ make_hierarchy <- function(dir = "vendor/paws/cran") {
   lines <- readLines(paws_desc)
   pkgs <- lines[grepl("paws\\.[a-z\\.]", lines, perl = T)]
   paws_pkg <- trimws(gsub("\\([^)]*\\).*", "", pkgs))
-  
+
   hierarchy <- unlist(lapply(paws_pkg, \(pkg) {
     if (pkg == PACKAGE) {
       gsub("\\.Rd$", "\\.md", basename(fs::dir_ls(file.path(dir, pkg, "man"))))
@@ -39,12 +39,12 @@ make_hierarchy <- function(dir = "vendor/paws/cran") {
   ref <- sub("[a-zA-Z0-9]+_", "", basename(hierarchy), perl = T)
   ref <- gsub("\\.md$", "", ref)
   ref[lvl == ref] <- "Client"
-  
+
   idx <- grepl("\\.md$", hierarchy)
   hierarchy[idx] <- sprintf("%s: docs/%s", ref[idx], hierarchy[idx])
   hierarchy[!idx] <- sprintf("%s: %s", ref[!idx], hierarchy[!idx])
   hierarchy <- split(hierarchy, lvl)
-  
+
   # order hierarchy
   for (j in seq_along(hierarchy)) {
     idx <- grep("Client", hierarchy[[j]])

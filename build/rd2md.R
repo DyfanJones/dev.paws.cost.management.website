@@ -1,7 +1,7 @@
 temp_html_dir <- tempfile()
 md_dir <- "build/mkdocs/docs/docs"
 dir <- "vendor/paws/cran"
-pkg <- "paws.storage"
+pkg <- "paws.cost.management"
 
 find_and_replace <- function(string, operator) {
   m <- regexpr(">[a-z0-9_]+<", string)
